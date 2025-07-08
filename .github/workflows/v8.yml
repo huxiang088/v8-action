@@ -12,7 +12,7 @@ on:
         version:
             type: string
             description: Target version of V8.
-            required: true
+            required: false
   #push:
   #  branches: [ master ]
   # watch:
