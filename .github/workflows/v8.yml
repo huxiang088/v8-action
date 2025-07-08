@@ -13,17 +13,17 @@ on:
   #   types: started
 
 env:
-  PATCH_FLAG: false
+  PATCH_FLAG: true
   COMMIT: 0
-  DEPOT_UPLOAD: false
+  DEPOT_UPLOAD: true
   SRC_UPLOAD: true
-  BINARY_UPLOAD: false
+  BINARY_UPLOAD: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     if: github.event.repository.owner.id == github.event.sender.id 	
     
     steps:
@@ -54,13 +54,12 @@ jobs:
       if: env.PATCH_FLAG == 'true' && !cancelled()
       run: |
         cd v8
-        git reset --hard $COMMIT
-        cd ..
+        git checkout 14.0.138
         
     - name: build v8
       run: |
         source ~/.bash_profile
-        gclient sync -f
+        gclient sync -D
     
     # compress this file
     - name: zip depot_tools
