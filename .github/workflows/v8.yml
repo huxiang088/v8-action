@@ -13,8 +13,8 @@ on:
             type: string
             description: Target version of V8.
             required: true
-  push:
-    branches: [ master ]
+  #push:
+  #  branches: [ master ]
   # watch:
   #   types: started
 
