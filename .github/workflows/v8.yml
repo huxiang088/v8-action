@@ -70,23 +70,18 @@ jobs:
     # 7zip v8 src
     - name: 7zip v8_src
       run: |
-        zip -q -r v8.zip v8
-        7z a v8.7z ./v8.zip -v2048m
-    
-    # upload depot_tools.zip to cowtransfer
+        zip -q -r v8_src.zip v8
+
     - name: upload depot_tools
-      if: env.DEPOT_UPLOAD == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress depot_tools.zip 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-   
-    # upload v8.zip to cowtransfer
+      uses: actions/upload-artifact@v4
+      with:
+        name: depot_tools
+        path: depot_tools.zip
+        retention-days: 10
+        
     - name: upload v8_src
-      if: env.SRC_UPLOAD == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress v8.7z.001 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-        ./transfer cow --block 2621440 -s -p 64 --no-progress v8.7z.002 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+      uses: actions/upload-artifact@v4
+      with:
+        name: v8_src
+        path: v8_src.zip
+        retention-days: 10
