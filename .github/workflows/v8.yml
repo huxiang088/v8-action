@@ -7,6 +7,12 @@
 name: BUILD v8
 
 on:
+  workflow_dispatch:
+    inputs:
+        version:
+            type: string
+            description: Target version of V8.
+            required: true
   push:
     branches: [ master ]
   # watch:
