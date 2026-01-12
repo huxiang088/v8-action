@@ -68,28 +68,28 @@ jobs:
         gclient sync -D
     
     # compress this file
-    # - name: zip depot_tools
-    #   if: env.DEPOT_UPLOAD == 'true' && !cancelled()
-    #   run: |
-    #     zip -q -r depot_tools.zip depot_tools
+    - name: zip depot_tools
+      if: env.DEPOT_UPLOAD == 'true' && !cancelled()
+      run: |
+        zip -q -9 -r depot_tools.zip depot_tools
         
     # 7zip v8 src
-    # - name: 7zip v8_src
-    #   run: |
-    #     zip -q -r v8_src.zip v8
+    - name: 7zip v8_src
+      run: |
+        zip -q -9 -r v8_src.zip v8
 
     - name: upload depot_tools
       uses: actions/upload-artifact@v4
       with:
         name: depot_tools
-        # path: depot_tools.zip
-        path: depot_tools
+        path: depot_tools.zip
+        # path: depot_tools
         retention-days: 10
         
     - name: upload v8_src
       uses: actions/upload-artifact@v4
       with:
         name: v8_src
-        # path: v8_src.zip
-        path: v8
+        path: v8_src.zip
+        # path: v8
         retention-days: 10
